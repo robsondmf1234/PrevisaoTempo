@@ -14,7 +14,7 @@ interface SimpleApi {
         @Query("appid") appid: String = "319dafc8a4218006eb4c9486365d9ac0"
     ): Response<WeatherMain>
 
-    @GET("data/2.5/weather")
+    @GET("data/2.5/weather?&units=metric")
     suspend fun getWeatherWithCityName(
         @Query("q") cityName: String,
         @Query("appid") appid: String = "319dafc8a4218006eb4c9486365d9ac0"
