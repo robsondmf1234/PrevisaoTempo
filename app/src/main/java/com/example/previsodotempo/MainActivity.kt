@@ -2,7 +2,6 @@ package com.example.previsodotempo
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -62,6 +61,8 @@ class MainActivity : AppCompatActivity() {
                 binding.success.txtMinTemperature.text = formaterToString(tempMinInt)
                 binding.success.txtHumidity.text = formaterToStringPercenatge(humidityInt)
 
+            } else {
+                setErrorLayout(true)
             }
         })
     }
@@ -69,13 +70,18 @@ class MainActivity : AppCompatActivity() {
     private fun setLoadingLayout(visibility: Boolean) {
         binding.loading.root.isVisible = visibility
         binding.success.root.isVisible = !visibility
-        //binding.error.root.isVisible = !visibility
+        binding.error.root.isVisible = !visibility
+    }
 
+    private fun setErrorLayout(visibility: Boolean) {
+        binding.loading.root.isVisible = !visibility
+        binding.success.root.isVisible = !visibility
+        binding.error.root.isVisible = visibility
     }
 
     private fun setLayoutSuccess(visibility: Boolean) {
         binding.success.root.isVisible = visibility
         binding.loading.root.isVisible = !visibility
-        //binding.error.root.isVisible = !visibility
+        binding.error.root.isVisible = !visibility
     }
 }
