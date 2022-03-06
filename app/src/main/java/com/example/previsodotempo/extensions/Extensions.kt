@@ -19,6 +19,8 @@ fun Context.hideKeyboard(view: View) {
 
 fun converter(tempDouble: Double?) = tempDouble?.roundToInt()
 
-fun formaterToString(tempInt: Int?) = tempInt.toString() + "° C"
+fun formaterTempToString(tempInt: Int?) = tempInt.toString() + "° C"
+fun formaterMaxTempToString(tempInt: Int?) = "Max: " + tempInt.toString() + "º C"
+fun formaterMinTempToString(tempInt: Int?) = "Min: " + tempInt.toString() + "º C"
 
 fun formaterToStringPercenatge(tempInt: Int?) = tempInt.toString() + "%"

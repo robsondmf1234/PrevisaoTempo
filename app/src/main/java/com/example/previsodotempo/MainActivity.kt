@@ -7,10 +7,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.previsodotempo.databinding.ActivityMainBinding
-import com.example.previsodotempo.extensions.converter
-import com.example.previsodotempo.extensions.formaterToString
-import com.example.previsodotempo.extensions.formaterToStringPercenatge
-import com.example.previsodotempo.extensions.hideKeyboard
+import com.example.previsodotempo.extensions.*
 
 const val TAG = "Response"
 
@@ -56,10 +53,10 @@ class MainActivity : AppCompatActivity() {
                 val humidityInt = converter(humidityDouble)
 
                 binding.success.txtCityName.text = response.body()?.name
-                binding.success.txtActualTemperature.text = formaterToString(tempInt)
-                binding.success.txtMaxTemperature.text = formaterToString(tempMaxInt)
-                binding.success.txtMinTemperature.text = formaterToString(tempMinInt)
-                binding.success.txtHumidity.text = formaterToStringPercenatge(humidityInt)
+                binding.success.txtTemp.text = formaterTempToString(tempInt)
+                binding.success.txtMaxTemp.text = formaterMaxTempToString(tempMaxInt)
+                binding.success.txtMinTemp.text = formaterMinTempToString(tempMinInt)
+                // binding.success.txtHumidity.text = formaterToStringPercenatge(humidityInt)
 
             } else {
                 setErrorLayout(true)
@@ -70,16 +67,19 @@ class MainActivity : AppCompatActivity() {
     private fun setLoadingLayout(visibility: Boolean) {
         binding.loading.root.isVisible = visibility
         binding.success.root.isVisible = !visibility
+        binding.backgroundSuccess.isVisible = !visibility
         binding.error.root.isVisible = !visibility
     }
 
     private fun setErrorLayout(visibility: Boolean) {
         binding.loading.root.isVisible = !visibility
         binding.success.root.isVisible = !visibility
+        binding.backgroundSuccess.isVisible = !visibility
         binding.error.root.isVisible = visibility
     }
 
     private fun setLayoutSuccess(visibility: Boolean) {
+        binding.backgroundSuccess.isVisible = visibility
         binding.success.root.isVisible = visibility
         binding.loading.root.isVisible = !visibility
         binding.error.root.isVisible = !visibility
