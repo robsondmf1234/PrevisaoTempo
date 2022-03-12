@@ -1,14 +1,18 @@
 package com.example.previsodotempo
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.previsodotempo.databinding.ActivityMainBinding
 import com.example.previsodotempo.extensions.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 const val TAG = "Response"
 
@@ -16,21 +20,57 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupListener()
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     private fun setupListener() {
         binding.iconGetLocation.setOnClickListener {
-            Toast.makeText(applicationContext,"Imagem clicada",Toast.LENGTH_SHORT).show()
+            fetchLocation()
+           Toast.makeText(applicationContext, "Imagem clicada", Toast.LENGTH_SHORT).show()
         }
         binding.btnSearch.setOnClickListener {
             searchWeatherByCityName()
             hideKeyboard()
+        }
+    }
+
+    private fun fetchLocation() {
+
+        val task = fusedLocationProviderClient.lastLocation
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                .checkSelfPermission(
+                    this,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+            return
+        }
+        task.addOnSuccessListener {
+            if (it != null) {
+                Log.d(TAG,"Location ${it.latitude}")
+                Toast.makeText(
+                    applicationContext,
+                    "Location is showing ${it.latitude}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
