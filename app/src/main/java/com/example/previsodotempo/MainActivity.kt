@@ -2,6 +2,7 @@ package com.example.previsodotempo
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListener() {
+        binding.iconGetLocation.setOnClickListener {
+            Toast.makeText(applicationContext,"Imagem clicada",Toast.LENGTH_SHORT).show()
+        }
         binding.btnSearch.setOnClickListener {
             searchWeatherByCityName()
             hideKeyboard()

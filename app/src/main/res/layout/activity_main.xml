@@ -14,19 +14,35 @@
         android:src="@drawable/nuvem"
         android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/edtCityName"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerEditWithBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:hint="Enter City Name"
         app:layout_constraintEnd_toStartOf="@id/btnSearch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/edtCityName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:hint="Enter City Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAlignBottom="true"
+            android:src="@drawable/ic_baseline_location_on_24"
+            app:layout_constraintBottom_toBottomOf="@id/edtCityName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edtCityName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnSearch"
@@ -34,9 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Search"
-        app:layout_constraintBottom_toBottomOf="@id/edtCityName"
+        app:layout_constraintBottom_toBottomOf="@id/containerEditWithBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edtCityName" />
+        app:layout_constraintStart_toEndOf="@id/containerEditWithBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <include
