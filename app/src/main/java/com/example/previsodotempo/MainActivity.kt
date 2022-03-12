@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.previsodotempo.databinding.ActivityMainBinding
-import com.example.previsodotempo.extensions.converter
-import com.example.previsodotempo.extensions.formaterToString
-import com.example.previsodotempo.extensions.formaterToStringPercenatge
-import com.example.previsodotempo.extensions.hideKeyboard
+import com.example.previsodotempo.extensions.*
 
 const val TAG = "Response"
 
@@ -27,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListener() {
+        binding.iconGetLocation.setOnClickListener {
+            Toast.makeText(applicationContext,"Imagem clicada",Toast.LENGTH_SHORT).show()
+        }
         binding.btnSearch.setOnClickListener {
             searchWeatherByCityName()
             hideKeyboard()
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchWeatherByCityName() {
-        Toast.makeText(this, "Teste", Toast.LENGTH_SHORT).show()
+        setLoadingLayout(true)
         val cidade: String = binding.edtCityName.text.toString()
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.myResponse2.observe(this, Observer { response ->
             if (response.isSuccessful && response.body() != null) {
                 Log.d(TAG, response.body().toString())
+                setLayoutSuccess(true)
 
                 val tempDouble = response.body()?.main?.temp
                 val tempMaxDouble = response.body()?.main?.temp_max
@@ -54,13 +56,36 @@ class MainActivity : AppCompatActivity() {
                 val tempMinInt = converter(tempMinDouble)
                 val humidityInt = converter(humidityDouble)
 
-                binding.txtCityName.text = response.body()?.name
-                binding.txtActualTemperature.text = formaterToString(tempInt)
-                binding.txtMaxTemperature.text = formaterToString(tempMaxInt)
-                binding.txtMinTemperature.text = formaterToString(tempMinInt)
-                binding.txtHumidity.text = formaterToStringPercenatge(humidityInt)
+                binding.success.txtCityName.text = response.body()?.name
+                binding.success.txtTemp.text = formaterTempToString(tempInt)
+                binding.success.txtMaxTemp.text = formaterMaxTempToString(tempMaxInt)
+                binding.success.txtMinTemp.text = formaterMinTempToString(tempMinInt)
+                // binding.success.txtHumidity.text = formaterToStringPercenatge(humidityInt)
 
+            } else {
+                setErrorLayout(true)
             }
         })
+    }
+
+    private fun setLoadingLayout(visibility: Boolean) {
+        binding.loading.root.isVisible = visibility
+        binding.success.root.isVisible = !visibility
+        binding.backgroundSuccess.isVisible = !visibility
+        binding.error.root.isVisible = !visibility
+    }
+
+    private fun setErrorLayout(visibility: Boolean) {
+        binding.loading.root.isVisible = !visibility
+        binding.success.root.isVisible = !visibility
+        binding.backgroundSuccess.isVisible = !visibility
+        binding.error.root.isVisible = visibility
+    }
+
+    private fun setLayoutSuccess(visibility: Boolean) {
+        binding.backgroundSuccess.isVisible = visibility
+        binding.success.root.isVisible = visibility
+        binding.loading.root.isVisible = !visibility
+        binding.error.root.isVisible = !visibility
     }
 }

@@ -6,135 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/edtCityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:hint="Enter City Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/background_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nuvem"
+        android:visibility="invisible" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerEditWithBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/btnSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/edtCityName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:hint="Enter City Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconGetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAlignBottom="true"
+            android:src="@drawable/ic_baseline_location_on_24"
+            app:layout_constraintBottom_toBottomOf="@id/edtCityName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edtCityName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Seacrh"
-        app:layout_constraintEnd_toEndOf="@id/edtCityName"
-        app:layout_constraintStart_toStartOf="@id/edtCityName"
-        app:layout_constraintTop_toBottomOf="@id/edtCityName" />
+        android:layout_marginEnd="8dp"
+        android:text="Search"
+        app:layout_constraintBottom_toBottomOf="@id/containerEditWithBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/containerEditWithBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/txtCity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:text="Cidade: "
-        app:layout_constraintStart_toStartOf="parent"
+    <include
+        android:id="@+id/success"
+        layout="@layout/layout_success"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSearch" />
 
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSearch" />
 
-    <TextView
-        android:id="@+id/txtCityName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtCity"
-        app:layout_constraintTop_toBottomOf="@id/btnSearch"
-        tools:text="Cidade: Hortolândia" />
-
-
-    <TextView
-        android:id="@+id/txtActualTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Temperatura:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtCityName" />
-
-    <TextView
-        android:id="@+id/txtActualTemperature"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtActualTemp"
-        app:layout_constraintTop_toBottomOf="@id/txtCityName"
-        tools:text="Temperatura : 32° C" />
-
-    <TextView
-        android:id="@+id/txtMaxTemp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Max Temp: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtActualTemp" />
-
-
-    <TextView
-        android:id="@+id/txtMaxTemperature"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtMaxTemp"
-        app:layout_constraintTop_toBottomOf="@id/txtActualTemperature"
-        tools:text="Temperatura Máxima: 32° C" />
-
-    <TextView
-        android:id="@+id/txtMinTemp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Min Temp: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMaxTemp" />
-
-    <TextView
-        android:id="@+id/txtMinTemperature"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtMinTemp"
-        app:layout_constraintTop_toBottomOf="@id/txtMaxTemperature"
-        tools:text="Temperatura Minima: 32° C" />
-
-    <TextView
-        android:id="@+id/txtHum"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Humidade: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMinTemp" />
-
-    <TextView
-        android:id="@+id/txtHumidity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtHum"
-        app:layout_constraintTop_toBottomOf="@id/txtMinTemperature"
-        tools:text="Humidade: 63%" />
-
+    <include
+        android:id="@+id/error"
+        layout="@layout/layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
