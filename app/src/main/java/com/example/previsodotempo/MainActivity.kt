@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.previsodotempo.databinding.ActivityMainBinding
 import com.example.previsodotempo.extensions.*
+import com.example.previsodotempo.model.WeatherMain
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import retrofit2.Response
 
 const val TAG = "Response"
 
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupListener() {
         binding.iconGetLocation.setOnClickListener {
             fetchLocation()
-           Toast.makeText(applicationContext, "Imagem clicada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Imagem clicada", Toast.LENGTH_SHORT).show()
         }
         binding.btnSearch.setOnClickListener {
             searchWeatherByCityName()
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
         task.addOnSuccessListener {
             if (it != null) {
-                Log.d(TAG,"Location ${it.latitude}")
+                Log.d(TAG, "Location ${it.latitude}")
                 Toast.makeText(
                     applicationContext,
                     "Location is showing ${it.latitude}",
@@ -90,6 +92,9 @@ class MainActivity : AppCompatActivity() {
                 val tempMaxDouble = response.body()?.main?.temp_max
                 val tempMinDouble = response.body()?.main?.temp_min
                 val humidityDouble = response.body()?.main?.humidity
+                if (response.body()?.weather != null) {
+                    setIconOnImageView(response)
+                }
 
                 val tempInt = converter(tempDouble)
                 val tempMaxInt = converter(tempMaxDouble)
@@ -100,12 +105,25 @@ class MainActivity : AppCompatActivity() {
                 binding.success.txtTemp.text = formaterTempToString(tempInt)
                 binding.success.txtMaxTemp.text = formaterMaxTempToString(tempMaxInt)
                 binding.success.txtMinTemp.text = formaterMinTempToString(tempMinInt)
-                // binding.success.txtHumidity.text = formaterToStringPercenatge(humidityInt)
 
             } else {
                 setErrorLayout(true)
             }
         })
+    }
+
+    private fun setIconOnImageView(response: Response<WeatherMain>) {
+        when (response.body()?.weather!!.first().icon) {
+            "04d" -> setImageIcon(R.drawable.icon_nublado_com_sol)
+            "04n" -> setImageIcon(R.drawable.icon_nublado_sem_sol)
+            "10d" -> setImageIcon(R.drawable.icon_chuva_com_sol)
+            "11d" -> setImageIcon(R.drawable.icon_chuva)
+            else -> setImageIcon(R.drawable.icon_unknow)
+        }
+    }
+
+    private fun setImageIcon(icon: Int) {
+        binding.success.imageIcon.setBackgroundResource(icon)
     }
 
     private fun setLoadingLayout(visibility: Boolean) {
