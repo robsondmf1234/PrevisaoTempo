@@ -59,4 +59,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
+    //Fused location provider
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 }
